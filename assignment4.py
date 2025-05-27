@@ -65,7 +65,7 @@ def test(model, inputs, labels):
     # Test a model.
     
     predictions = model(inputs) # forward pass
-    
+
     loss = cross_entropy_loss(predictions, labels) # compute the loss
     accuracy = classification_accuracy(predictions, labels) # compute the accuracy
 
@@ -82,8 +82,12 @@ def train_and_test(model, training_data, test_data, iterations, epochs, report=F
 
     # Task 3.1
     # Initial evaluation of loss and accuracy on the training and test sets.
-    # Replace the line below with your code.
-    raise NotImplementedError
+    
+    # calculate the loss and accuracy of the training set
+    training_loss, training_acc = test(model, training_inputs, training_labels)
+
+    # calculate the loss and accuracy of the test set
+    test_loss, test_acc = test(model, test_inputs, test_labels)
 
     if report:
         print(f'Epoch 0: training-loss: {training_loss:.3f} | training-acc: {training_acc:.3f} | test-loss: {test_loss:.3f} | test-acc: {test_acc:.3f}')
@@ -96,16 +100,22 @@ def train_and_test(model, training_data, test_data, iterations, epochs, report=F
 
     # Task 3.2
     # Initialise the optimizer.
-    # Replace the line below with your code.
-    raise NotImplementedError
+    optimizer = Optimizer(model.parameters(), 0.1)
 
     for iter_i in range(iterations):
 
         # Task 3.3
         # Train the model.
         # Evaluate loss and accuracy on the training and test sets.
-        # Replace the line below with your code.
-        raise NotImplementedError
+
+        # train the model for x epochs
+        train(model, optimizer, training_inputs, training_labels, epochs)
+
+        # calculate the loss and accuracy of the training set
+        training_loss, training_acc = test(model, training_inputs, training_labels) 
+
+        # calculates the loss and accuracy of the test set
+        test_loss, test_acc = test(model, test_inputs, test_labels)
 
         if report:
             print(f'Epoch {(iter_i + 1) * epochs}: training-loss: {training_loss:.3f} | training-acc: {training_acc:.3f} | test-loss: {test_loss:.3f} | test-acc: {test_acc:.3f}')
