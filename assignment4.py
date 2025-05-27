@@ -63,8 +63,13 @@ def train(model, optimizer, inputs, labels, epochs):
 def test(model, inputs, labels):
     # Task 2
     # Test a model.
-    # Replace the line below with your code.
-    raise NotImplementedError
+    
+    predictions = model(inputs) # forward pass
+    
+    loss = cross_entropy_loss(predictions, labels) # compute the loss
+    accuracy = classification_accuracy(predictions, labels) # compute the accuracy
+
+    return loss, accuracy
 
 def train_and_test(model, training_data, test_data, iterations, epochs, report=False):
     model = deepcopy(model)
