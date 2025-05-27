@@ -51,8 +51,14 @@ def plot_model_and_dataset(model, X, y):
 def train(model, optimizer, inputs, labels, epochs):
     # Task 1
     # Train a model for a set number of epochs.
-    # Replace the line below with your code.
-    raise NotImplementedError
+
+    # iterate over the number of epochs
+    for epoch in range(epochs):
+        optimizer.zero_grad() # reset the gradients
+        y_pred = model(inputs) # forward pass
+        loss = cross_entropy_loss(y_pred, labels) # compute the loss
+        loss.backward() # back propagation
+        optimizer.step() # gradient descent
 
 def test(model, inputs, labels):
     # Task 2
