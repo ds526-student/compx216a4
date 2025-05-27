@@ -69,7 +69,7 @@ def test(model, inputs, labels):
     loss = cross_entropy_loss(predictions, labels) # compute the loss
     accuracy = classification_accuracy(predictions, labels) # compute the accuracy
 
-    return loss, accuracy
+    return loss.data, accuracy
 
 def train_and_test(model, training_data, test_data, iterations, epochs, report=False):
     model = deepcopy(model)
@@ -142,8 +142,8 @@ def train_and_test(model, training_data, test_data, iterations, epochs, report=F
 
 # Task 4
 # Initialise a wider model and a deeper model.
-model_wide = None
-model_deep = None
+model_wide = NN(nin=2, nouts=[16, 1])
+model_deep = NN(nin=2, nouts=[8, 8, 1])
 
 def test_training_set_sizes(sizes, model):
     sizes = sorted(sizes)
@@ -154,16 +154,22 @@ def test_training_set_sizes(sizes, model):
 
     # Task 5.1
     # Create a test set.
-    # Replace the line below with your code.
-    raise NotImplementedError
+
+    # create a test set
+    test_X, test_y = make_circles(noise=0.1)
 
     for size in sizes:
 
         # Task 5.2
         # Create a training set of the specified size.
         # Obtain the training and test losses and accuracy of the model.
-        # Replace the line below with your code.
-        raise NotImplementedError
+        
+        training_X, training_y = make_circles(n_samples=size, noise=0.1) # create a training set of the specified size
+
+        # train and test the model
+        training_losses, training_accs, test_losses, test_accs = train_and_test(
+            model, (training_X, training_y), (test_X, test_y), 10, 1000, False
+        )
 
         recorded_training_losses.append(training_losses[-1])
         recorded_training_accs.append(training_accs[-1])
